@@ -1,35 +1,48 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DeviLx Stars By Anggazyy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Orbitron:wght@400;700&display=swap">
     <link rel="icon" type="image/x-icon" href="https://aliceecdn.vercel.app/file/79adb0d0b2.jpeg">
         <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Loading Screen -->
-    <div id="loading-screen" class="loading-screen">
+    <div id="loadingScreen" class="loading-screen">
         <div class="loading-content">
-            <div class="logo-loading">
-                <img src="https://aliceecdn.vercel.app/file/79adb0d0b2.jpeg" alt="DeviLx Stars Logo">
-                <h1>DeviLx Stars</h1>
+            <div class="loading-logo">
+                <i class="fas fa-star"></i>
             </div>
+            <div class="loading-text">
+                <span>D</span>
+                <span>e</span>
+                <span>v</span>
+                <span>i</span>
+                <span>L</span>
+                <span>x</span>
+                <span>&nbsp;</span>
+                <span>S</span>
+                <span>t</span>
+                <span>a</span>
+                <span>r</span>
+                <span>s</span>
+            </div>
+            <div class="loading-subtext">Initializing Bot Dashboard...</div>
             <div class="loading-bar">
                 <div class="loading-progress"></div>
             </div>
-            <p class="loading-text">Loading...</p>
         </div>
     </div>
 
     <!-- Welcome Popup -->
-    <div id="welcome-popup" class="welcome-popup">
+    <div id="welcomePopup" class="welcome-popup">
         <div class="popup-content">
             <div class="popup-header">
-                <h3><i class="fas fa-star"></i> Welcome To DeviLx Stars!</h3>
-                <button class="close-popup" id="close-popup"><i class="fas fa-times"></i></button>
+                <h2><i class="fas fa-bell"></i> Welcome To DeviLx Stars !</h2>
+                <button id="closePopup" class="close-btn"><i class="fas fa-times"></i></button>
             </div>
             <div class="popup-body">
                 <p>Untuk mendapatkan setiap update tentang DeviLx Stars jangan lupa untuk join saluran whatsapp ya</p>
@@ -40,213 +53,294 @@
         </div>
     </div>
 
-    <!-- Main Content -->
+    <!-- Main Container -->
     <div class="container">
-        <!-- Header & Navigation -->
-        <header>
-            <div class="header-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
                 <div class="logo">
                     <img src="https://aliceecdn.vercel.app/file/79adb0d0b2.jpeg" alt="DeviLx Stars Logo">
                     <h1>DeviLx Stars <span>By Anggazyy</span></h1>
                 </div>
-                
-                <nav class="desktop-nav">
-                    <a href="#home">Home</a>
-                    <a href="#features">Features</a>
-                    <a href="#groups">Groups</a>
-                    <a href="#leaderboard">Leaderboard</a>
-                    <a href="#pricing">Pricing</a>
-                </nav>
-                
-                <div class="mobile-menu-btn" id="mobile-menu-btn">
-                    <i class="fas fa-ellipsis-v"></i>
-                </div>
             </div>
-            
-            <div class="mobile-nav" id="mobile-nav">
-                <div class="mobile-nav-header">
-                    <h3>SKANDALHUB</h3>
-                    <button class="close-mobile-nav"><i class="fas fa-times"></i></button>
-                </div>
-                <div class="mobile-nav-content">
-                    <a href="#home"><i class="fas fa-home"></i> Home</a>
-                    <a href="#features"><i class="fas fa-star"></i> Features</a>
-                    <a href="#groups"><i class="fas fa-users"></i> Groups</a>
-                    <a href="#leaderboard"><i class="fas fa-trophy"></i> Leaderboard</a>
-                    <a href="#pricing"><i class="fas fa-tags"></i> Pricing</a>
-                    <a href="https://wa.me/6288804148639" target="_blank"><i class="fab fa-whatsapp"></i> Join Saluran</a>
-                </div>
-                <div class="mobile-nav-footer">
-                    <p>Fungsi Website:</p>
-                    <p>Menampilkan info tentang bot DeviLx Stars, grup yang menyewa, leaderboard pengguna, fitur terpopuler, dan harga sewa.</p>
+            <div class="header-right">
+                <button id="hamburgerMenu" class="hamburger-btn">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div id="quickActions" class="quick-actions">
+                    <div class="quick-header">
+                        <h3><i class="fas fa-bolt"></i> SKANDALHUB</h3>
+                    </div>
+                    <div class="quick-content">
+                        <p>Quick actions & navigation for DeviLx Stars Dashboard</p>
+                        <div class="quick-links">
+                            <a href="#features" class="quick-link"><i class="fas fa-robot"></i> Bot Features</a>
+                            <a href="#groups" class="quick-link"><i class="fas fa-users"></i> Group List</a>
+                            <a href="#leaderboard" class="quick-link"><i class="fas fa-trophy"></i> Leaderboard</a>
+                            <a href="#pricing" class="quick-link"><i class="fas fa-tag"></i> Pricing</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
 
         <!-- Hero Section -->
-        <section id="home" class="hero-section fade-in">
+        <section class="hero-section fade-in">
             <div class="hero-content">
-                <h2 class="hero-title">DeviLx Stars Bot</h2>
-                <p class="hero-subtitle">Bot WhatsApp dengan fitur terlengkap dan performa tercepat</p>
-                <p class="hero-desc">Website ini dibuat untuk memberikan informasi lengkap tentang bot DeviLx Stars, menampilkan grup yang menyewa bot, leaderboard pengguna teraktif, fitur paling populer, dan paket harga sewa.</p>
-                
-                <div class="scroll-indicator">
-                    <p>Scroll untuk melihat lebih lanjut</p>
-                    <i class="fas fa-chevron-down"></i>
+                <h2>DeviLx Stars Bot Dashboard</h2>
+                <p>Welcome to the ultimate WhatsApp bot experience. Monitor bot usage, top commands, group rentals, and user leaderboards in real-time.</p>
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalCommandsCount">0</h3>
+                            <p>Total Commands</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalGroupsCount">0</h3>
+                            <p>Groups Rented</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalUsersCount">0</h3>
+                            <p>Active Users</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="scroll-down">
+                    <a href="#why-choose" class="scroll-link">
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
                 </div>
             </div>
         </section>
 
         <!-- Why Choose Section -->
-        <section id="features" class="why-choose-section fade-in">
-            <h2 class="section-title">Mengapa harus pilih DeviLx Stars?</h2>
+        <section id="why-choose" class="section fade-in">
+            <div class="section-header">
+                <h2><i class="fas fa-question-circle"></i> Mengapa harus pilih DeviLx Stars ?</h2>
+                <p>Discover the advantages of using DeviLx Stars WhatsApp Bot</p>
+            </div>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
+                        <i class="fas fa-rocket"></i>
                     </div>
                     <h3>Bot Super Cepat</h3>
-                    <p>Dapatkan respons cepat dari bot dengan latency terendah di kelasnya.</p>
+                    <p>Dapatkan respons cepat dari bot dengan teknologi server premium dan optimasi kode yang maksimal.</p>
                 </div>
-                
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-layer-group"></i>
+                        <i class="fas fa-cogs"></i>
                     </div>
                     <h3>Fitur Melimpah</h3>
-                    <p>Kini bot mempunyai 1706+ fitur yang terus bertambah setiap minggunya.</p>
+                    <p>Kini Bot mempunyai 1706+ Fitur yang terus diperbarui setiap minggu dengan fitur-fitur terbaru.</p>
                 </div>
-                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h3>Minim Error</h3>
+                    <p>Fitur jarang error dengan sistem monitoring 24/7 dan perbaikan bug secara real-time.</p>
+                </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>Minim Error</h3>
-                    <p>Fitur jarang error dengan sistem monitoring 24/7 dan update rutin.</p>
+                    <h3>Keamanan Terjamin</h3>
+                    <p>Data pengguna terlindungi dengan sistem enkripsi end-to-end dan perlindungan privasi maksimal.</p>
                 </div>
-                
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-headset"></i>
                     </div>
                     <h3>Support 24/7</h3>
-                    <p>Tim support siap membantu kapan saja dengan respons yang ramah.</p>
+                    <p>Tim support siap membantu Anda kapan saja melalui WhatsApp dengan respon kurang dari 5 menit.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>Update Berkala</h3>
+                    <p>Bot mendapatkan pembaruan fitur setiap minggu untuk pengalaman penggunaan yang lebih baik.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Groups Section -->
-        <section id="groups" class="groups-section fade-in">
-            <h2 class="section-title">
-                <i class="fas fa-users"></i> List Group Menyewa DeviLx Stars
-            </h2>
-            <p class="section-subtitle">Grup-grup yang telah mempercayai DeviLx Stars sebagai bot mereka</p>
-            
-            <div class="loading-data" id="groups-loading">
-                <div class="spinner"></div>
-                <p>Memuat data grup...</p>
+        <!-- Group List Section -->
+        <section id="groups" class="section fade-in">
+            <div class="section-header">
+                <h2><i class="fas fa-users"></i> List Group Menyewa DeviLx Stars</h2>
+                <p>Groups that have rented DeviLx Stars bot services</p>
             </div>
-            
-            <div class="groups-container" id="groups-container">
-                <!-- Data akan dimuat dari JSONBin -->
+            <div class="table-container">
+                <div class="table-responsive">
+                    <table class="data-table" id="groupsTable">
+                        <thead>
+                            <tr>
+                                <th>Group Name</th>
+                                <th>Group ID</th>
+                                <th>Expired Date</th>
+                                <th>Added By</th>
+                            </tr>
+                        </thead>
+                        <tbody id="groupsTableBody">
+                            <!-- Data will be loaded from JSONBin -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-footer">
+                    <div class="table-info">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Showing all groups currently renting DeviLx Stars</span>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Leaderboard Section -->
-        <section id="leaderboard" class="leaderboard-section fade-in">
-            <h2 class="section-title">
-                <i class="fas fa-trophy"></i> Leaderboard Pengguna Bot
-            </h2>
-            <p class="section-subtitle">Top pengguna aktif DeviLx Stars</p>
-            
-            <div class="reward-notice">
-                <i class="fas fa-gift"></i>
-                <p>Jika kamu pengguna top 1 pengguna bot kamu akan mendapatkan reward Saldo DANA setiap bulan nya.</p>
+        <section id="leaderboard" class="section fade-in">
+            <div class="section-header">
+                <h2><i class="fas fa-trophy"></i> Leaderboard Pengguna Bot</h2>
+                <p>Top users with the highest bot usage statistics</p>
             </div>
-            
-            <div class="loading-data" id="leaderboard-loading">
-                <div class="spinner"></div>
-                <p>Memuat data leaderboard...</p>
-            </div>
-            
-            <div class="leaderboard-container" id="leaderboard-container">
-                <!-- Data akan dimuat dari JSONBin -->
+            <div class="leaderboard-container">
+                <div class="leaderboard-header">
+                    <div class="leaderboard-title">
+                        <h3><i class="fas fa-crown"></i> Top Bot Users</h3>
+                        <p class="reward-note">
+                            <i class="fas fa-gift"></i> Jika kamu pengguna top 1 pengguna bot kamu akan mendapatkan reward Saldo DANA setiap bulan nya.
+                        </p>
+                    </div>
+                </div>
+                <div class="leaderboard-content" id="leaderboardContent">
+                    <!-- Leaderboard data will be loaded from JSONBin -->
+                </div>
             </div>
         </section>
 
         <!-- Top Features Section -->
-        <section class="top-features-section fade-in">
-            <h2 class="section-title">
-                <i class="fas fa-chart-line"></i> Top Fitur yang Sering Digunakan
-            </h2>
-            <p class="section-subtitle">Fitur-fitur paling populer di DeviLx Stars</p>
-            
-            <div class="loading-data" id="features-loading">
-                <div class="spinner"></div>
-                <p>Memuat data fitur...</p>
+        <section id="top-features" class="section fade-in">
+            <div class="section-header">
+                <h2><i class="fas fa-chart-bar"></i> Top Fitur yang sering di gunakan</h2>
+                <p>Most frequently used bot features based on user statistics</p>
             </div>
-            
-            <div class="features-list-container" id="features-container">
-                <!-- Data akan dimuat dari JSONBin -->
+            <div class="features-list" id="topFeaturesList">
+                <!-- Features data will be loaded from JSONBin -->
             </div>
         </section>
 
         <!-- Pricing Section -->
-        <section id="pricing" class="pricing-section fade-in">
-            <h2 class="section-title">
-                <i class="fas fa-tags"></i> Pricing Sewa Bot
-            </h2>
-            <p class="section-subtitle">Pilih paket yang sesuai dengan kebutuhanmu</p>
-            
-            <div class="pricing-container">
+        <section id="pricing" class="section fade-in">
+            <div class="section-header">
+                <h2><i class="fas fa-tags"></i> Pricing Sewa Bot</h2>
+                <p>Choose the perfect plan for your WhatsApp bot needs</p>
+            </div>
+            <div class="pricing-grid">
                 <div class="pricing-card">
                     <div class="pricing-header">
                         <h3>1 Minggu</h3>
-                        <div class="price">Rp 5.000</div>
+                        <div class="pricing-price">
+                            <span class="currency">Rp</span>
+                            <span class="amount">5.000</span>
+                        </div>
                     </div>
                     <div class="pricing-features">
-                        <p><i class="fas fa-check"></i> Full Akses fitur</p>
-                        <p><i class="fas fa-times"></i> Premium user</p>
-                        <p><i class="fas fa-check"></i> Online 24 Hours</p>
-                        <p><i class="fas fa-check"></i> Full Support</p>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Full Akses fitur</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-times"></i>
+                            <span>Premium user</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Online 24 Hours</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Full Support</span>
+                        </div>
                     </div>
                     <a href="https://wa.me/6288804148639?text=PricesSelected" target="_blank" class="pricing-btn">
                         Beli Sekarang
                     </a>
                 </div>
-                
+
                 <div class="pricing-card">
                     <div class="pricing-header">
                         <h3>1 Bulan</h3>
-                        <div class="price">Rp 10.000</div>
+                        <div class="pricing-price">
+                            <span class="currency">Rp</span>
+                            <span class="amount">10.000</span>
+                        </div>
                     </div>
                     <div class="pricing-features">
-                        <p><i class="fas fa-check"></i> Full Akses fitur</p>
-                        <p><i class="fas fa-check"></i> Premium user</p>
-                        <p><i class="fas fa-check"></i> Online 24 Hours</p>
-                        <p><i class="fas fa-check"></i> Full Support</p>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Full Akses fitur</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Premium user</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Online 24 Hours</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Full Support</span>
+                        </div>
                     </div>
                     <a href="https://wa.me/6288804148639?text=PricesSelected" target="_blank" class="pricing-btn">
                         Beli Sekarang
                     </a>
                 </div>
-                
-                <div class="pricing-card highlight">
-                    <div class="badge-container">
-                        <div class="badge best-seller">Best Seller</div>
-                        <div class="badge discount">Discount 15%</div>
+
+                <div class="pricing-card popular">
+                    <div class="pricing-badge">
+                        <span class="best-seller">Best Seller</span>
+                        <span class="discount">Discount 15%</span>
                     </div>
                     <div class="pricing-header">
                         <h3>Permanent</h3>
-                        <div class="price">Rp 15.000</div>
+                        <div class="pricing-price">
+                            <span class="currency">Rp</span>
+                            <span class="amount">15.000</span>
+                        </div>
                     </div>
                     <div class="pricing-features">
-                        <p><i class="fas fa-check"></i> Full Akses fitur</p>
-                        <p><i class="fas fa-check"></i> Premium user</p>
-                        <p><i class="fas fa-check"></i> Online 24 Hours</p>
-                        <p><i class="fas fa-check"></i> Full Support</p>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Full Akses fitur</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Premium user</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Online 24 Hours</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-check"></i>
+                            <span>Full Support</span>
+                        </div>
                     </div>
-                    <a href="https://wa.me/6288804148639?text=PricesSelected" target="_blank" class="pricing-btn highlight-btn">
+                    <a href="https://wa.me/6288804148639?text=PricesSelected" target="_blank" class="pricing-btn popular-btn">
                         Beli Sekarang
                     </a>
                 </div>
@@ -254,44 +348,25 @@
         </section>
 
         <!-- Footer -->
-        <footer class="footer fade-in">
+        <footer class="footer">
             <div class="footer-content">
                 <div class="footer-logo">
                     <img src="https://aliceecdn.vercel.app/file/79adb0d0b2.jpeg" alt="DeviLx Stars Logo">
-                    <div>
-                        <h3>DeviLx Stars</h3>
-                        <p>By Anggazyy</p>
-                    </div>
+                    <h3>DeviLx Stars <span>By Anggazyy</span></h3>
                 </div>
-                
+                <div class="footer-info">
+                    <p>© Copyright ❤ 2025 DeviLx Stars. All rights reserved.</p>
+                    <p>This dashboard displays real-time data from JSONBin for monitoring bot usage, group rentals, and user statistics.</p>
+                </div>
                 <div class="footer-links">
-                    <a href="#home">Home</a>
-                    <a href="#features">Features</a>
-                    <a href="#groups">Groups</a>
-                    <a href="#leaderboard">Leaderboard</a>
-                    <a href="#pricing">Pricing</a>
+                    <a href="https://wa.me/6288804148639" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="back-to-top"><i class="fas fa-arrow-up"></i></a>
                 </div>
-                
-                <div class="footer-social">
-                    <a href="https://wa.me/6288804148639" target="_blank">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="#">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="footer-copyright">
-                <p>© Copyright ❤ 2025 DeviLx Stars. All rights reserved.</p>
             </div>
         </footer>
     </div>
 
-    <!-- Scripts -->
+    <!-- JavaScript -->
     <script src="script.js"></script>
 </body>
 </html>

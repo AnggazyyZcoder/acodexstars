@@ -1,194 +1,104 @@
 // script.js
 
-// Global Variables
-let jsonBinData = null;
-const JSONBIN_ID = "696ee3ea43b1c97be93beadc";
+// JSONBin Configuration
+const JSONBIN_ID = '696ee3ea43b1c97be93beadc';
 const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`;
+const JSONBIN_HEADERS = {
+    'X-Master-Key': '$2a$10$EG.QfA7ThwjokzPkTJ4hKuO6pCKkBd6wjKDK2LzLvR/pFm0OE6nVm'
+};
 
 // DOM Elements
-let loadingScreen, welcomePopup, closePopupBtn, mobileMenuBtn, mobileNav, closeMobileNavBtn;
-let groupsContainer, leaderboardContainer, featuresContainer;
-let groupsLoading, leaderboardLoading, featuresLoading;
+const loadingScreen = document.getElementById('loadingScreen');
+const welcomePopup = document.getElementById('welcomePopup');
+const closePopupBtn = document.getElementById('closePopup');
+const hamburgerMenu = document.getElementById('hamburgerMenu');
+const quickActions = document.getElementById('quickActions');
+const totalCommandsCount = document.getElementById('totalCommandsCount');
+const totalGroupsCount = document.getElementById('totalGroupsCount');
+const totalUsersCount = document.getElementById('totalUsersCount');
+const groupsTableBody = document.getElementById('groupsTableBody');
+const leaderboardContent = document.getElementById('leaderboardContent');
+const topFeaturesList = document.getElementById('topFeaturesList');
 
-// Initialize when DOM is loaded
+// Data variables
+let botData = {};
+
+// Initialize the website
 document.addEventListener('DOMContentLoaded', function() {
-    // Get DOM elements
-    loadingScreen = document.getElementById('loading-screen');
-    welcomePopup = document.getElementById('welcome-popup');
-    closePopupBtn = document.getElementById('close-popup');
-    mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    mobileNav = document.getElementById('mobile-nav');
-    closeMobileNavBtn = document.querySelector('.close-mobile-nav');
+    // Start loading animation
+    startLoadingAnimation();
     
-    groupsContainer = document.getElementById('groups-container');
-    leaderboardContainer = document.getElementById('leaderboard-container');
-    featuresContainer = document.getElementById('features-container');
-    
-    groupsLoading = document.getElementById('groups-loading');
-    leaderboardLoading = document.getElementById('leaderboard-loading');
-    featuresLoading = document.getElementById('features-loading');
+    // Load data from JSONBin after loading screen
+    setTimeout(() => {
+        loadDataFromJSONBin();
+    }, 500);
     
     // Initialize event listeners
     initEventListeners();
-    
-    // Start loading sequence
-    startLoadingSequence();
     
     // Initialize scroll animations
     initScrollAnimations();
 });
 
-// Initialize all event listeners
-function initEventListeners() {
-    // Close popup button
-    if (closePopupBtn) {
-        closePopupBtn.addEventListener('click', function() {
-            closeWelcomePopup();
-        });
-    }
-    
-    // Mobile menu button
-    if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener('click', function() {
-            mobileNav.classList.add('open');
-        });
-    }
-    
-    // Close mobile nav button
-    if (closeMobileNavBtn) {
-        closeMobileNavBtn.addEventListener('click', function() {
-            mobileNav.classList.remove('open');
-        });
-    }
-    
-    // Close mobile nav when clicking on a link
-    const mobileNavLinks = document.querySelectorAll('.mobile-nav-content a');
-    mobileNavLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            mobileNav.classList.remove('open');
-        });
+// Start loading animation
+function startLoadingAnimation() {
+    // Animate loading text letters
+    const loadingTextSpans = document.querySelectorAll('.loading-text span');
+    loadingTextSpans.forEach((span, index) => {
+        span.style.setProperty('--i', index);
     });
     
-    // Close mobile nav when clicking outside
-    document.addEventListener('click', function(event) {
-        if (mobileNav.classList.contains('open') && 
-            !mobileNav.contains(event.target) && 
-            !mobileMenuBtn.contains(event.target)) {
-            mobileNav.classList.remove('open');
-        }
-    });
-}
-
-// Start loading sequence
-function startLoadingSequence() {
-    // Simulate 5 seconds loading time
+    // Hide loading screen after 5 seconds
     setTimeout(() => {
-        // Hide loading screen
         loadingScreen.style.opacity = '0';
+        loadingScreen.style.visibility = 'hidden';
         
-        // After transition, remove loading screen and show popup
+        // Show welcome popup after a short delay
         setTimeout(() => {
-            loadingScreen.style.display = 'none';
-            
-            // Show welcome popup after a short delay
-            setTimeout(() => {
-                welcomePopup.style.display = 'block';
-            }, 500);
-        }, 800);
-        
-        // Fetch data from JSONBin
-        fetchDataFromJsonBin();
-        
-        // Initialize animations
-        initFadeInAnimations();
+            welcomePopup.style.display = 'block';
+        }, 300);
     }, 5000);
 }
 
-// Close welcome popup
-function closeWelcomePopup() {
-    welcomePopup.style.animation = 'popupAppear 0.5s ease-out reverse';
-    welcomePopup.style.opacity = '0';
-    
-    setTimeout(() => {
-        welcomePopup.style.display = 'none';
-    }, 500);
-}
-
-// Fetch data from JSONBin
-async function fetchDataFromJsonBin() {
+// Load data from JSONBin
+async function loadDataFromJSONBin() {
     try {
-        // Show loading states
-        groupsLoading.style.display = 'flex';
-        leaderboardLoading.style.display = 'flex';
-        featuresLoading.style.display = 'flex';
-        
-        // Hide containers initially
-        groupsContainer.innerHTML = '';
-        leaderboardContainer.innerHTML = '';
-        featuresContainer.innerHTML = '';
+        console.log('Fetching data from JSONBin...');
         
         // Fetch data from JSONBin
         const response = await fetch(JSONBIN_URL, {
-            headers: {
-                'X-Master-Key': '$2a$10$EG.QfA7ThwjokzPkTJ4hKuO6pCKkBd6wjKDK2LzLvR/pFm0OE6nVm' // This is a sample key, replace with actual key
-            }
+            headers: JSONBIN_HEADERS
         });
         
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         
-        const data = await response.json();
-        jsonBinData = data.record;
+        const result = await response.json();
+        botData = result.record;
         
-        // Render data
-        renderGroupsData();
-        renderLeaderboardData();
-        renderTopFeaturesData();
+        console.log('Data loaded successfully:', botData);
+        
+        // Update UI with loaded data
+        updateDashboardStats();
+        updateGroupsTable();
+        updateLeaderboard();
+        updateTopFeatures();
         
     } catch (error) {
-        console.error('Error fetching data from JSONBin:', error);
+        console.error('Error loading data from JSONBin:', error);
         
-        // Show error messages
-        groupsLoading.innerHTML = '<p>Gagal memuat data grup. Coba lagi nanti.</p>';
-        leaderboardLoading.innerHTML = '<p>Gagal memuat data leaderboard. Coba lagi nanti.</p>';
-        featuresLoading.innerHTML = '<p>Gagal memuat data fitur. Coba lagi nanti.</p>';
-        
-        // Use sample data as fallback
-        jsonBinData = {
+        // Fallback to sample data if JSONBin fails
+        botData = {
             totalCommands: {
                 listsewa: 1
             },
-            topFeatures: [
-                "listsewa",
-                "sticker",
-                "download"
-            ],
+            topFeatures: ["listsewa"],
             topUsers: [
                 {
                     name: "anggazyycy",
                     number: "6288804148639",
-                    used: 156
-                },
-                {
-                    name: "indra",
-                    number: "6281234567890",
-                    used: 89
-                },
-                {
-                    name: "sari",
-                    number: "6289876543210",
-                    used: 67
-                },
-                {
-                    name: "budi",
-                    number: "6281112233445",
-                    used: 45
-                },
-                {
-                    name: "riri",
-                    number: "6285556667778",
-                    used: 32
+                    used: 1
                 }
             ],
             listSewa: [
@@ -197,222 +107,335 @@ async function fetchDataFromJsonBin() {
                     name: "JEET LADIES",
                     expired: "♾️ Permanent",
                     addedBy: "0"
-                },
-                {
-                    id: "120363392678266998@g.us",
-                    name: "DEVILX GROUP",
-                    expired: "2025-12-31",
-                    addedBy: "anggazyycy"
-                },
-                {
-                    id: "120363392678266999@g.us",
-                    name: "STARS COMMUNITY",
-                    expired: "2025-11-15",
-                    addedBy: "admin"
-                },
-                {
-                    id: "120363392678267000@g.us",
-                    name: "BOT TESTERS",
-                    expired: "♾️ Permanent",
-                    addedBy: "anggazyycy"
                 }
             ]
         };
         
-        // Render with fallback data
-        renderGroupsData();
-        renderLeaderboardData();
-        renderTopFeaturesData();
+        // Update UI with fallback data
+        updateDashboardStats();
+        updateGroupsTable();
+        updateLeaderboard();
+        updateTopFeatures();
+        
+        // Show error notification
+        showNotification('Using sample data. JSONBin connection failed.', 'error');
     }
 }
 
-// Render groups data
-function renderGroupsData() {
-    if (!jsonBinData || !jsonBinData.listSewa) return;
+// Update dashboard statistics
+function updateDashboardStats() {
+    // Calculate total commands
+    let totalCommands = 0;
+    if (botData.totalCommands) {
+        Object.values(botData.totalCommands).forEach(value => {
+            totalCommands += value;
+        });
+    }
+    totalCommandsCount.textContent = totalCommands.toLocaleString();
     
-    // Hide loading
-    groupsLoading.style.display = 'none';
+    // Update groups count
+    const groupsCount = botData.listSewa ? botData.listSewa.length : 0;
+    totalGroupsCount.textContent = groupsCount.toLocaleString();
     
-    // Clear container
-    groupsContainer.innerHTML = '';
-    
-    // Create group cards
-    jsonBinData.listSewa.forEach((group, index) => {
-        const groupCard = document.createElement('div');
-        groupCard.className = 'group-card fade-in';
-        groupCard.style.animationDelay = `${index * 0.1}s`;
-        
-        // Get first letter for avatar
-        const firstLetter = group.name.charAt(0).toUpperCase();
-        
-        groupCard.innerHTML = `
-            <div class="group-header">
-                <div class="group-avatar">${firstLetter}</div>
-                <div class="group-info">
-                    <h3>${group.name}</h3>
-                    <p>ID: ${group.id.substring(0, 15)}...</p>
-                </div>
-            </div>
-            <div class="group-details">
-                <div class="detail-item">
-                    <span class="detail-label">Status</span>
-                    <span class="detail-value">${group.expired === "♾️ Permanent" ? "Aktif" : "Sewa"}</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Expired</span>
-                    <span class="detail-value">${group.expired}</span>
-                </div>
-                <div class="detail-item">
-                    <span class="detail-label">Added By</span>
-                    <span class="detail-value">${group.addedBy === "0" ? "System" : group.addedBy}</span>
-                </div>
-            </div>
-        `;
-        
-        groupsContainer.appendChild(groupCard);
-    });
+    // Update users count
+    const usersCount = botData.topUsers ? botData.topUsers.length : 0;
+    totalUsersCount.textContent = usersCount.toLocaleString();
 }
 
-// Render leaderboard data
-function renderLeaderboardData() {
-    if (!jsonBinData || !jsonBinData.topUsers) return;
+// Update groups table
+function updateGroupsTable() {
+    if (!botData.listSewa || botData.listSewa.length === 0) {
+        groupsTableBody.innerHTML = `
+            <tr>
+                <td colspan="4" style="text-align: center; padding: 40px;">
+                    <i class="fas fa-users-slash" style="font-size: 2rem; margin-bottom: 15px; display: block; color: var(--text-muted);"></i>
+                    <p>No groups are currently renting DeviLx Stars</p>
+                </td>
+            </tr>
+        `;
+        return;
+    }
     
-    // Hide loading
-    leaderboardLoading.style.display = 'none';
+    let tableHTML = '';
+    botData.listSewa.forEach(group => {
+        tableHTML += `
+            <tr>
+                <td>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-users" style="color: var(--primary-color);"></i>
+                        <strong>${group.name}</strong>
+                    </div>
+                </td>
+                <td>${group.id}</td>
+                <td>
+                    <span class="status-badge ${group.expired === '♾️ Permanent' ? 'permanent' : 'active'}">
+                        ${group.expired}
+                    </span>
+                </td>
+                <td>${group.addedBy}</td>
+            </tr>
+        `;
+    });
     
-    // Clear container
-    leaderboardContainer.innerHTML = '';
+    groupsTableBody.innerHTML = tableHTML;
     
-    // Find max used value for percentage calculation
-    const maxUsed = Math.max(...jsonBinData.topUsers.map(user => user.used));
-    
-    // Create user cards
-    jsonBinData.topUsers.forEach((user, index) => {
-        const userCard = document.createElement('div');
-        userCard.className = 'user-card fade-in';
-        userCard.style.animationDelay = `${index * 0.1}s`;
-        
-        // Get first letter for avatar
-        const firstLetter = user.name.charAt(0).toUpperCase();
-        
-        // Medal based on rank
-        let medalHTML = '';
-        if (index === 0) {
-            medalHTML = '<div class="medal gold">🥇</div>';
-        } else if (index === 1) {
-            medalHTML = '<div class="medal silver">🥈</div>';
-        } else if (index === 2) {
-            medalHTML = '<div class="medal bronze">🥉</div>';
+    // Add CSS for status badges
+    const style = document.createElement('style');
+    style.textContent = `
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
-        
-        // Calculate percentage for progress bar
-        const percentage = (user.used / maxUsed) * 100;
-        
-        userCard.innerHTML = `
-            ${medalHTML}
-            <div class="user-header">
-                <div class="user-avatar">${firstLetter}</div>
-                <div class="user-info">
-                    <h3>${user.name}</h3>
-                    <p>${user.number}</p>
-                </div>
+        .status-badge.permanent {
+            background: rgba(0, 200, 83, 0.2);
+            color: #00C853;
+            border: 1px solid rgba(0, 200, 83, 0.5);
+        }
+        .status-badge.active {
+            background: rgba(33, 150, 243, 0.2);
+            color: #2196F3;
+            border: 1px solid rgba(33, 150, 243, 0.5);
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Update leaderboard
+function updateLeaderboard() {
+    if (!botData.topUsers || botData.topUsers.length === 0) {
+        leaderboardContent.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                <i class="fas fa-trophy" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
+                <h3>No user data available</h3>
+                <p>User statistics will appear here once users start using the bot</p>
             </div>
-            <div class="user-stats">
-                <div class="stat-bar">
-                    <div class="stat-progress" style="width: ${percentage}%"></div>
+        `;
+        return;
+    }
+    
+    // Sort users by usage (highest first)
+    const sortedUsers = [...botData.topUsers].sort((a, b) => b.used - a.used);
+    
+    let leaderboardHTML = '';
+    sortedUsers.forEach((user, index) => {
+        const rank = index + 1;
+        const rankClass = rank === 1 ? 'rank-1' : rank === 2 ? 'rank-2' : rank === 3 ? 'rank-3' : '';
+        
+        // Get initials for avatar
+        const initials = user.name.charAt(0).toUpperCase();
+        
+        leaderboardHTML += `
+            <div class="leaderboard-item">
+                <div class="leaderboard-rank ${rankClass}">#${rank}</div>
+                <div class="leaderboard-user">
+                    <div class="user-avatar" style="background: ${getRandomColor()};">${initials}</div>
+                    <div class="user-info">
+                        <h4>${user.name}</h4>
+                        <p>${user.number}</p>
+                    </div>
                 </div>
-                <div class="stat-value">
-                    <span>Fitur Digunakan</span>
-                    <span>${user.used} kali</span>
+                <div class="leaderboard-stats">
+                    <div class="used-count">${user.used}</div>
+                    <p>commands used</p>
                 </div>
             </div>
         `;
-        
-        leaderboardContainer.appendChild(userCard);
     });
+    
+    leaderboardContent.innerHTML = leaderboardHTML;
 }
 
-// Render top features data
-function renderTopFeaturesData() {
-    if (!jsonBinData || !jsonBinData.topFeatures) return;
-    
-    // Hide loading
-    featuresLoading.style.display = 'none';
-    
-    // Clear container
-    featuresContainer.innerHTML = '';
-    
-    // Feature descriptions mapping
-    const featureDescriptions = {
-        "listsewa": "Menampilkan daftar grup yang menyewa bot",
-        "sticker": "Membuat stiker dari gambar atau video",
-        "download": "Mendownload video dari berbagai platform",
-        "ai": "Fitur kecerdasan buatan untuk chat",
-        "game": "Berbagai permainan seru dalam bot",
-        "music": "Mendownload dan memutar musik",
-        "news": "Menampilkan berita terkini",
-        "weather": "Informasi cuaca terkini"
-    };
-    
-    // Create feature items
-    jsonBinData.topFeatures.forEach((feature, index) => {
-        // Use sample features if we don't have enough
-        const featureName = feature || ["Sticker Maker", "Downloader", "AI Chat"][index] || `Fitur ${index + 1}`;
-        const featureDesc = featureDescriptions[feature] || "Fitur populer DeviLx Stars";
-        
-        const featureItem = document.createElement('div');
-        featureItem.className = 'feature-item fade-in';
-        featureItem.style.animationDelay = `${index * 0.1}s`;
-        
-        featureItem.innerHTML = `
-            <div class="feature-rank">${index + 1}</div>
-            <div class="feature-content">
-                <h4>${featureName}</h4>
-                <p>${featureDesc}</p>
+// Update top features
+function updateTopFeatures() {
+    if (!botData.topFeatures || botData.topFeatures.length === 0) {
+        topFeaturesList.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: var(--text-muted); grid-column: 1 / -1;">
+                <i class="fas fa-chart-bar" style="font-size: 3rem; margin-bottom: 20px; opacity: 0.5;"></i>
+                <h3>No feature data available</h3>
+                <p>Feature usage statistics will appear here</p>
             </div>
         `;
+        return;
+    }
+    
+    let featuresHTML = '';
+    botData.topFeatures.forEach((feature, index) => {
+        const rank = index + 1;
         
-        featuresContainer.appendChild(featureItem);
+        featuresHTML += `
+            <div class="feature-item-list">
+                <div class="feature-rank">${rank}</div>
+                <div class="feature-details">
+                    <h4>${formatFeatureName(feature)}</h4>
+                    <p>Most frequently used command</p>
+                </div>
+            </div>
+        `;
     });
+    
+    topFeaturesList.innerHTML = featuresHTML;
 }
 
-// Initialize fade-in animations
-function initFadeInAnimations() {
-    // Add fade-in class to all sections after loading
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-        section.classList.add('fade-in');
+// Initialize event listeners
+function initEventListeners() {
+    // Close welcome popup
+    closePopupBtn.addEventListener('click', function() {
+        welcomePopup.style.opacity = '0';
+        welcomePopup.style.transform = 'translateX(120%)';
+        
+        setTimeout(() => {
+            welcomePopup.style.display = 'none';
+        }, 500);
     });
+    
+    // Toggle quick actions menu
+    hamburgerMenu.addEventListener('click', function() {
+        quickActions.classList.toggle('active');
+    });
+    
+    // Close quick actions when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!hamburgerMenu.contains(event.target) && !quickActions.contains(event.target)) {
+            quickActions.classList.remove('active');
+        }
+    });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                // Close quick actions if open
+                quickActions.classList.remove('active');
+                
+                // Smooth scroll to target
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    // Back to top button
+    const backToTopBtn = document.querySelector('.back-to-top');
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
 }
 
 // Initialize scroll animations
 function initScrollAnimations() {
-    // Intersection Observer for scroll animations
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
+    const fadeElements = document.querySelectorAll('.fade-in');
     
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('fade-in');
+    const fadeInOnScroll = function() {
+        fadeElements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 150;
+            
+            if (elementTop < window.innerHeight - elementVisible) {
+                element.classList.add('visible');
             }
         });
-    }, observerOptions);
+    };
     
-    // Observe all sections
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-        observer.observe(section);
-    });
+    // Check on load and scroll
+    window.addEventListener('load', fadeInOnScroll);
+    window.addEventListener('scroll', fadeInOnScroll);
+    
+    // Initial check
+    fadeInOnScroll();
 }
 
-// Handle window resize for responsive adjustments
+// Helper function to format feature names
+function formatFeatureName(feature) {
+    // Convert camelCase or snake_case to readable format
+    return feature
+        .replace(/([A-Z])/g, ' $1')
+        .replace(/_/g, ' ')
+        .replace(/^\w/, c => c.toUpperCase())
+        .trim();
+}
+
+// Helper function to get random color for avatars
+function getRandomColor() {
+    const colors = [
+        '#8A2BE2', '#6A0DAD', '#9B4DFF', '#7B1FA2', '#AB47BC',
+        '#BA68C8', '#CE93D8', '#E1BEE7', '#F3E5F5'
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
+// Show notification
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+        <span>${message}</span>
+    `;
+    
+    // Add styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--card-bg);
+            border-left: 4px solid var(--primary-color);
+            padding: 15px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow);
+            z-index: 9999;
+            transform: translateX(120%);
+            animation: slideIn 0.5s ease forwards;
+        }
+        .notification.error {
+            border-left-color: var(--danger-color);
+        }
+        .notification i {
+            font-size: 1.2rem;
+        }
+        .notification.error i {
+            color: var(--danger-color);
+        }
+    `;
+    document.head.appendChild(style);
+    
+    document.body.appendChild(notification);
+    
+    // Remove after 5 seconds
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(120%)';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 500);
+    }, 5000);
+}
+
+// Handle window resize
 window.addEventListener('resize', function() {
-    // Close mobile nav on resize to desktop
-    if (window.innerWidth > 768 && mobileNav.classList.contains('open')) {
-        mobileNav.classList.remove('open');
+    // Close quick actions on mobile when resizing
+    if (window.innerWidth > 768) {
+        quickActions.classList.remove('active');
     }
 });
